@@ -6,8 +6,9 @@
 #define MAX_INT_LEN 10
 #define LIST_FILE "/home/otten/Documents/programming/bin/todo_list.txt"
 
-int add_item(char *item)
+void add_item(char *item)
 {
+    int test;
     FILE *filePointer;
     char line[MAXIMUM_LINE_LENGTH]; 
     int lineCount = 0; 
@@ -21,7 +22,7 @@ int add_item(char *item)
     fprintf(filePointer, "%d. %s\n", lineCount + 1, item);
 }
 
-int open_file()
+void open_file()
 {
     FILE *filePointer;
     char line[MAXIMUM_LINE_LENGTH]; 
@@ -34,7 +35,7 @@ int open_file()
     printf("\n");
 }
 
-int set_index(char *line, int number)
+void set_index(char *line, int number)
 {
     int i;
     char temp[MAXIMUM_LINE_LENGTH];
@@ -49,8 +50,6 @@ int remove_item(int line_to_remove)
 {
     FILE *inputFile, *outputFile;
     char line[MAXIMUM_LINE_LENGTH]; // Adjust the buffer size as needed
-    char number_str[MAX_INT_LEN];
-    int number;
     // Open the input file for reading
     inputFile = fopen(LIST_FILE, "r");
     if (inputFile == NULL) {
@@ -92,12 +91,13 @@ int remove_item(int line_to_remove)
 
     // Rename the temporary file to the original file
     rename("temp.txt", LIST_FILE);
+    return 0;
 }
 
-int clear_file()
+void clear_file()
 {
     FILE *todoFile;
-    char answer[5];
+    char answer[6];
     printf("are you shure that you whant to do clear the entire file [Y/n]:");
     scanf("%5s", answer);
     if(answer[0] == 'y' || answer[0] == 'Y')
@@ -105,7 +105,7 @@ int clear_file()
         todoFile = fopen(LIST_FILE, "w");
         fclose(todoFile);
         printf("\ncleared the list\n");
-        return 0;
+        return;
     }
     printf("\ndid not clear the list char:%s\n", answer);
 }
@@ -113,8 +113,7 @@ int insert_item(int lineToAdd, char *item)
 {
     FILE *inputFile, *outputFile;
     char line[MAXIMUM_LINE_LENGTH]; // Adjust the buffer size as needed
-    char number_str[MAX_INT_LEN];
-    int number;
+
     // Open the input file for reading
     inputFile = fopen(LIST_FILE, "r");
     if (inputFile == NULL) {
@@ -156,9 +155,10 @@ int insert_item(int lineToAdd, char *item)
 
     // Rename the temporary file to the original file
     rename("temp.txt", LIST_FILE);
+    return 0;
 }
 
-int help () 
+void help () 
 {
     printf("-a      adds new item \"todo -a <item>\"\n");
     printf("-i      inserts item \"todo -i <index> <item>\n");
